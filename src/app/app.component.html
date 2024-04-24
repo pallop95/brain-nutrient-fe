@@ -1,21 +1,19 @@
-<h2>Testing Routing</h2>
+<mat-toolbar color="primary">
+  <span>Brain Nutrient</span>
 
-<nav>
-  <ul>
-    <li>
-      <a routerLink="" routerLinkActive="active">Main</a>
-    </li>
-  </ul>
-  <ul>
-    <li>
-      <a routerLink="/book" routerLinkActive="active">Book</a>
-    </li>
-  </ul>
-  <ul>
-    <li>
-      <a routerLink="/book/book-form" routerLinkActive="active">Book form</a>
-    </li>
-  </ul>
-</nav>
+  <span class="fill-remaining-space"></span>
 
-<router-outlet></router-outlet>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item routerLink="" routerLinkActive="active">Main</button>
+    <button mat-menu-item routerLink="/book" routerLinkActive="active">Book</button>
+  </mat-menu>
+  <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu">
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <button mat-button color="warn" (click)="logout()">Logout</button>
+</mat-toolbar>
+
+<div class="container mx-auto px-4 py-4">
+  <router-outlet></router-outlet>
+</div>

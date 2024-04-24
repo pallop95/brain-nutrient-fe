@@ -1,12 +1,11 @@
 export interface IBook extends IReason {
-  id: string,
-  name: string,
-  chapters: IReason[],
+  id: string;
+  chapters: IReason[];
 }
 
 export interface IReason {
-  what: string,
-  how: string,
-  why: string,
+  name: string;
+  what: string;
+  how: string;
+  why: string;
 }
-

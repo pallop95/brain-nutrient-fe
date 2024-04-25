@@ -3,7 +3,7 @@
   <h2>ID: {{ id }}</h2>
 </div>
 
-<form [formGroup]="bookForm" (ngSubmit)="onSubmit()" class="max-w-xl mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+<form *ngIf="bookForm" [formGroup]="bookForm" (ngSubmit)="onSubmit()" class="max-w-xl mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
   <!--
   <div class="mb-4">
     <label class="block text-gray-700 text-sm font-bold mb-2" for="id">

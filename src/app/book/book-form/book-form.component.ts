@@ -49,7 +49,6 @@ export class BookFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    debugger;
     // this.initializeForm();
     switch (this.mode) {
       case 'create':
@@ -66,21 +65,20 @@ export class BookFormComponent implements OnInit {
 
         this.bookService.getBookById(this.id).subscribe((book) => {
           this.book = book;
-        });
-        console.log('book ::', this.book);
 
-        if(!this.book) return;
+          if(!this.book) return;
 
-        const tempChapters = this.fb.array(
-          this.book.chapters.map(chapter => this.buildChapterForm(chapter)) ?? []
-        );
-        console.log('tempChapters ::', tempChapters);
+          const tempChapters = this.fb.array(
+            this.book.chapters?.map(chapter => this.buildChapterForm(chapter)) ?? []
+          );
+          console.log('tempChapters ::', tempChapters);
 
-        this.bookForm = this.fb.group({
-          id: [this.book.id, Validators.required],
-          name: [this.book?.name, Validators.required],
-          whyRead: [this.book?.whyRead, Validators.required],
-          chapters: tempChapters,
+          this.bookForm = this.fb.group({
+            id: [this.book.id, Validators.required],
+            name: [this.book?.name, Validators.required],
+            whyRead: [this.book?.whyRead, Validators.required],
+            chapters: tempChapters,
+          });
         });
         break;
       default:
@@ -135,9 +133,10 @@ export class BookFormComponent implements OnInit {
 
   onSubmit(): void {
     if (this.bookForm.valid && ['create', 'update'].includes(this.mode || '')) {
-      // Form is valid, handle submission
-      console.log(this.bookForm.value);
-
+      if (!this.bookForm.dirty) {
+        this.router.navigate(['/book']);
+        return;
+      }
       switch (this.mode) {
         case 'create':
           this.bookService.addBook(this.bookForm.value).subscribe(() => {

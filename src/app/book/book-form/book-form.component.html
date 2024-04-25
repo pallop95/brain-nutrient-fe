@@ -20,15 +20,63 @@
     <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="whyRead" formControlName="whyRead" placeholder="Why Read This Book?"></textarea>
   </div>
   <div formArrayName="chapters">
-    <div *ngFor="let chapter of bookForm.get('chapters').controls; let i = index" class="mb-4 border p-4 rounded">
-      <div class="mb-4">
-        <label class="block text-gray-700 text-sm font-bold mb-2" [for]="'title' + i">
-          Chapter Title
-        </label>
-        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" [id]="'title' + i" type="text" [formControlName]="i + '.title'" placeholder="Chapter Title">
-      </div>
-      <!-- Repeat similar structures for other chapter fields -->
-      <button type="button" (click)="removeChapter(i)" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Remove Chapter</button>
+    <!-- chapters?.controls -->
+    <div *ngFor="let chapter of chapters.controls; let i = index" class="mb-4 border p-4 rounded">
+      <ng-container [formGroupName]="i">
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" [for]="'title' + i">
+            Chapter Title
+          </label>
+          <input
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            [id]="'title' + i"
+            type="text"
+            formControlName="title"
+            placeholder="Chapter Title"
+          >
+        </div>
+
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" [for]="'what' + i">
+            What
+          </label>
+          <input
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            [id]="'what' + i"
+            type="text"
+            formControlName="what"
+            placeholder="What"
+          >
+        </div>
+
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" [for]="'how' + i">
+            How
+          </label>
+          <input
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            [id]="'how' + i"
+            type="text"
+            formControlName="how"
+            placeholder="How"
+          >
+        </div>
+
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" [for]="'whyRead' + i">
+            why Read
+          </label>
+          <input
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            [id]="'whyRead' + i"
+            type="text"
+            formControlName="whyRead"
+            placeholder="Why Read"
+          >
+        </div>
+
+        <button type="button" (click)="removeChapter(i)" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Remove Chapter</button>
+      </ng-container>
     </div>
   </div>
   <button type="button" (click)="addChapter()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Add Chapter</button>

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, input, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -6,11 +6,13 @@ import { MatInputModule } from '@angular/material/input';
 import { IBook } from '../book.interface';
 // import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-book-form',
   standalone: true,
   imports: [
+    CommonModule,
     FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,
@@ -29,11 +31,15 @@ export class BookFormComponent implements OnInit {
   ngOnInit(): void {
     // this.initializeForm();
     this.bookForm = this.fb.group({
-      id: ['', Validators.required],
+      // id: ['', Validators.required],
       name: ['', Validators.required],
       whyRead: ['', Validators.required],
-      chapters: this.fb.array([this.buildChapterForm()]),
+      chapters: this.fb.array([]),
     });
+  }
+
+  get chapters(): FormArray { // Define a getter for chapters
+    return this.bookForm.get('chapters') as FormArray;
   }
 
   // initializeForm(): void {
@@ -60,7 +66,7 @@ export class BookFormComponent implements OnInit {
   }
 
   addChapter(): void {
-    const chapters = this.bookForm.get('chapters') as FormArray;
+    const chapters = this.chapters as FormArray;
     chapters.push(this.buildChapterForm());
   }
 

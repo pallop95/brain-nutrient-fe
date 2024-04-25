@@ -1,3 +1,8 @@
+<div>
+  <h2>Mode: {{ mode }}</h2>
+  <h2>ID: {{ id }}</h2>
+</div>
+
 <form [formGroup]="bookForm" (ngSubmit)="onSubmit()" class="max-w-xl mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
   <!--
   <div class="mb-4">
@@ -11,15 +16,15 @@
     <label class="block text-gray-700 text-sm font-bold mb-2" for="name">
       Book Name
     </label>
-    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" type="text" formControlName="name" placeholder="Book Name">
+    <input [readonly]="mode === 'view'" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" type="text" formControlName="name" placeholder="Book Name">
   </div>
   <div class="mb-4">
     <label class="block text-gray-700 text-sm font-bold mb-2" for="whyRead">
       Why Read This Book?
     </label>
-    <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="whyRead" formControlName="whyRead" placeholder="Why Read This Book?"></textarea>
+    <textarea [readonly]="mode === 'view'" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="whyRead" formControlName="whyRead" placeholder="Why Read This Book?"></textarea>
   </div>
-  <div formArrayName="chapters">
+  <div *ngIf="chapters.length ?? 0 !== 0" formArrayName="chapters">
     <!-- chapters?.controls -->
     <div *ngFor="let chapter of chapters.controls; let i = index" class="mb-4 border p-4 rounded">
       <ng-container [formGroupName]="i">
@@ -28,6 +33,7 @@
             Chapter Title
           </label>
           <input
+            [readonly]="mode === 'view'"
             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             [id]="'title' + i"
             type="text"
@@ -41,6 +47,7 @@
             What
           </label>
           <input
+            [readonly]="mode === 'view'"
             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             [id]="'what' + i"
             type="text"
@@ -54,6 +61,7 @@
             How
           </label>
           <input
+            [readonly]="mode === 'view'"
             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             [id]="'how' + i"
             type="text"
@@ -67,6 +75,7 @@
             why Read
           </label>
           <input
+            [readonly]="mode === 'view'"
             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             [id]="'whyRead' + i"
             type="text"
@@ -75,14 +84,14 @@
           >
         </div>
 
-        <button type="button" (click)="removeChapter(i)" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Remove Chapter</button>
+        <button type="button" [disabled]="mode === 'view'" (click)="removeChapter(i)" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Remove Chapter</button>
       </ng-container>
     </div>
   </div>
-  <button type="button" (click)="addChapter()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Add Chapter</button>
+  <button type="button" [disabled]="mode === 'view'" (click)="addChapter()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Add Chapter</button>
   <div class="flex items-center justify-between mt-4">
     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-      Save Book
+      {{ textSubmit }}
     </button>
   </div>
 </form>

@@ -14,6 +14,8 @@ export interface IChapter {
   whyRead: string;
 }
 
+export type ModeFormType = 'view' | 'update' | 'create';
+
 // TODO: remove
 // TODO: more detail about "art of programming"
 // Additional mock data for IBook and IChapter interfaces

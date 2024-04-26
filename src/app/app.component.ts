@@ -1,22 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, RouterLinkActive, RouterModule, RouterOutlet, Routes } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive, RouterModule, RouterOutlet, Routes } from '@angular/router';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-
-// export const routes: Routes = [
-//   {
-//     path: 'main',
-//     loadComponent: () => import('./main/main.component').then((m) => m.MainComponent),
-//   },
-//   {
-//     path: 'book',
-//     loadComponent: () => import('./book/book.component').then((b) => b.BookComponent),
-//   }
-// ];
+import { AuthService } from './auth/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -33,9 +23,25 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  private authService = inject(AuthService);
+  isAuthRoute!: boolean;
   title = 'brain-nutrient-fe';
 
+  constructor(
+    private router: Router,
+  ) {
+    this.router.events.subscribe((event) => {
+      if (this.router.url === '/auth') {
+        this.isAuthRoute = true;
+      } else {
+        this.isAuthRoute = false;
+      }
+    });
+  }
+
   logout() {
-    console.log('logout ...');
+    this.authService.logout().subscribe(() => {
+      this.router.navigate(['auth']);
+    });
   }
 }

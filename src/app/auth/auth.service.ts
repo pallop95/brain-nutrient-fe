@@ -1,5 +1,6 @@
 import { inject, Injectable } from '@angular/core';
-import { from, Observable } from 'rxjs';
+import { from, Observable, of } from 'rxjs';
+/*
 import {
   Auth,
   GoogleAuthProvider,
@@ -13,21 +14,40 @@ import {
   idToken,
 } from "@angular/fire/auth";
 import { Firestore } from 'firebase/firestore';
+*/
+import { AuthControllerService } from '../../../generated-sources/openapi';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   // private _firestore = inject(Firestore);
+  /*
   private authState$ = authState(this.afAuth);
   private user$ = user(this.afAuth);
   private idToken$ = idToken(this.afAuth);
+  */
 
   constructor(
+    /*
     private afAuth: Auth,
-    private authService: AuthService,
+    */
+    private authControllerService: AuthControllerService,
   ) { }
 
+  signUp(email: string, password: string): Observable<any> {
+    // return from(createUserWithEmailAndPassword(this.afAuth, email, password));
+    return this.authControllerService.authControllerRegister({ email, password });
+  }
+
+  login(email: string, password: string): Observable<any> {
+    return this.authControllerService.authControllerRegister({ email, password });
+  }
+
+  logout(): Observable<any> {
+    return of();
+  }
+  /* fore firebase
   signUp(email: string, password: string): Observable<any> {
     return from(createUserWithEmailAndPassword(this.afAuth, email, password));
   }
@@ -39,6 +59,7 @@ export class AuthService {
   logout(): Observable<any> {
     return from(this.afAuth.signOut());
   }
+  */
 
   /*
   // https://pawelidziak.medium.com/firebase-authentication-tutorial-angularfire-7-4-auth-firestore-google-facebook-email-2023-89e1b910902c

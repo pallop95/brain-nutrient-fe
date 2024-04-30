@@ -29,7 +29,7 @@ export interface BooksControllerServiceInterface {
      * 
      * @param bookDto 
      */
-    booksControllerCreateBook(bookDto: BookDto, extraHttpRequestParams?: any): Observable<{}>;
+    booksControllerCreateBook(bookDto: BookDto, extraHttpRequestParams?: any): Observable<BookDto>;
 
     /**
      * 
@@ -42,20 +42,20 @@ export interface BooksControllerServiceInterface {
      * 
      * 
      */
-    booksControllerFindAllBooks(extraHttpRequestParams?: any): Observable<{}>;
+    booksControllerFindAllBooks(extraHttpRequestParams?: any): Observable<Array<BookDto>>;
 
     /**
      * 
      * 
      * @param id 
      */
-    booksControllerFindBookById(id: string, extraHttpRequestParams?: any): Observable<{}>;
+    booksControllerFindBookById(id: string, extraHttpRequestParams?: any): Observable<BookDto>;
 
     /**
      * 
      * 
      * @param id 
      */
-    booksControllerUpdateBook(id: string, extraHttpRequestParams?: any): Observable<{}>;
+    booksControllerUpdateBook(id: string, extraHttpRequestParams?: any): Observable<BookDto>;
 
 }

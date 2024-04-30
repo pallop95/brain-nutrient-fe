@@ -29,20 +29,20 @@ export interface AuthControllerServiceInterface {
      * 
      * @param loginDto 
      */
-    authControllerLogin(loginDto: LoginDto, extraHttpRequestParams?: any): Observable<{}>;
+    authControllerLogin(loginDto: LoginDto, extraHttpRequestParams?: any): Observable<object>;
 
     /**
      * 
      * 
      * @param body 
      */
-    authControllerRefreshToken(body: object, extraHttpRequestParams?: any): Observable<{}>;
+    authControllerRefreshToken(body: object, extraHttpRequestParams?: any): Observable<object>;
 
     /**
      * 
      * 
      * @param loginDto 
      */
-    authControllerRegister(loginDto: LoginDto, extraHttpRequestParams?: any): Observable<{}>;
+    authControllerRegister(loginDto: LoginDto, extraHttpRequestParams?: any): Observable<object>;
 
 }

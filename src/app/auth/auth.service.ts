@@ -25,6 +25,7 @@ export class AuthService {
 
   constructor(
     private afAuth: Auth,
+    private authService: AuthService,
   ) { }
 
   signUp(email: string, password: string): Observable<any> {

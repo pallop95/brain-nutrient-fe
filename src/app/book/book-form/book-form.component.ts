@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BookService } from '../book.service';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-book-form',
@@ -18,6 +19,7 @@ import { BookService } from '../book.service';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
+    MatButtonModule,
   ],
   templateUrl: './book-form.component.html',
   styleUrl: './book-form.component.scss'

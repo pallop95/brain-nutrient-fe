@@ -13,6 +13,7 @@ import { HttpHeaders }                                       from '@angular/comm
 
 import { Observable }                                        from 'rxjs';
 
+import { AccessToken } from '../model/models';
 import { LoginDto } from '../model/models';
 
 
@@ -29,20 +30,20 @@ export interface AuthControllerServiceInterface {
      * 
      * @param loginDto 
      */
-    authControllerLogin(loginDto: LoginDto, extraHttpRequestParams?: any): Observable<object>;
+    authControllerLogin(loginDto: LoginDto, extraHttpRequestParams?: any): Observable<AccessToken>;
 
     /**
      * 
      * 
      * @param body 
      */
-    authControllerRefreshToken(body: object, extraHttpRequestParams?: any): Observable<object>;
+    authControllerRefreshToken(body: object, extraHttpRequestParams?: any): Observable<AccessToken>;
 
     /**
      * 
      * 
      * @param loginDto 
      */
-    authControllerRegister(loginDto: LoginDto, extraHttpRequestParams?: any): Observable<object>;
+    authControllerRegister(loginDto: LoginDto, extraHttpRequestParams?: any): Observable<AccessToken>;
 
 }

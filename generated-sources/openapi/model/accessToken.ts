@@ -11,9 +11,7 @@
  */
 
 
-export interface BookDto { 
-    name: string;
-    whyRead: string;
-    chapters: Array<string>;
+export interface AccessToken { 
+    access_token: string;
 }
 

@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 import { UserCredential } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { AccessToken } from '../../../generated-sources/openapi';
 
 @Component({
   selector: 'app-auth',
@@ -49,7 +50,7 @@ export class AuthComponent {
     const { email, password } = this.loginForm.value;
 
     this.isLoading = true;
-    let authObs: Observable<UserCredential>;
+    let authObs: Observable<AccessToken>;
 
     if (this.isLoginMode) {
       // TODO: login
@@ -61,23 +62,23 @@ export class AuthComponent {
 
     authObs.subscribe(
       resData => {
-        console.log('AuthObs ::', resData);
+        console.log('AuthObs Token ::', resData);
         this.isLoading = false;
+        this.loginForm.reset();
+        this.loginForm.markAsPristine();
         this.router.navigate(['/'])
       },
       errorMessage => {
         console.log(errorMessage);
         this.error = errorMessage;
 
-        alert(this.error);
+        alert(this.error); // this.showErrorAlert(errorMessage);
         this.onHandleError();
 
-        // this.showErrorAlert(errorMessage);
         this.isLoading = false;
       }
     );
 
-    this.loginForm.reset();
   }
 
   onHandleError() {

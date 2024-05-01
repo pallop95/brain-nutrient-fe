@@ -16,6 +16,7 @@ configuration.ts
 encoder.ts
 git_push.sh
 index.ts
+model/accessToken.ts
 model/bookDto.ts
 model/createUserDto.ts
 model/loginDto.ts

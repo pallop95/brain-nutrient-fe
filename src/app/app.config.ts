@@ -3,7 +3,7 @@ import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 
 
 import {
@@ -20,6 +20,7 @@ import { getMessaging, provideMessaging } from '@angular/fire/messaging';
 import { getPerformance, providePerformance } from '@angular/fire/performance';
 import { getStorage, provideStorage } from '@angular/fire/storage';
 import { firebaseConfig } from '../environments/environment';
+import { authInterceptor } from './auth/auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -37,6 +38,8 @@ export const appConfig: ApplicationConfig = {
     ScreenTrackingService,
     UserTrackingService,
     provideAnimationsAsync(),
-    provideHttpClient(), // https://angular.dev/guide/http/setup#providing-httpclient-through-dependency-injection
+    provideHttpClient(
+      withInterceptors([authInterceptor])
+    ), // https://angular.dev/guide/http/setup#providing-httpclient-through-dependency-injection
   ]
 };

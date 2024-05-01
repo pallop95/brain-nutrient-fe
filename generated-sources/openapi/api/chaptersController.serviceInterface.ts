@@ -13,6 +13,7 @@ import { HttpHeaders }                                       from '@angular/comm
 
 import { Observable }                                        from 'rxjs';
 
+import { ChapterDto } from '../model/models';
 
 
 import { Configuration }                                     from '../configuration';
@@ -26,9 +27,9 @@ export interface ChaptersControllerServiceInterface {
     /**
      * 
      * 
-     * @param body 
+     * @param chapterDto 
      */
-    chaptersControllerCreateChapter(body: object, extraHttpRequestParams?: any): Observable<{}>;
+    chaptersControllerCreateChapter(chapterDto: ChapterDto, extraHttpRequestParams?: any): Observable<ChapterDto>;
 
     /**
      * 
@@ -41,20 +42,21 @@ export interface ChaptersControllerServiceInterface {
      * 
      * 
      */
-    chaptersControllerFindAllChaptersS(extraHttpRequestParams?: any): Observable<{}>;
+    chaptersControllerFindAllChaptersS(extraHttpRequestParams?: any): Observable<Array<ChapterDto>>;
 
     /**
      * 
      * 
      * @param id 
      */
-    chaptersControllerFindChapterById(id: string, extraHttpRequestParams?: any): Observable<{}>;
+    chaptersControllerFindChapterById(id: string, extraHttpRequestParams?: any): Observable<ChapterDto>;
 
     /**
      * 
      * 
      * @param id 
+     * @param chapterDto 
      */
-    chaptersControllerUpdateChapter(id: string, extraHttpRequestParams?: any): Observable<{}>;
+    chaptersControllerUpdateChapter(id: string, chapterDto: ChapterDto, extraHttpRequestParams?: any): Observable<ChapterDto>;
 
 }

@@ -55,7 +55,8 @@ export interface BooksControllerServiceInterface {
      * 
      * 
      * @param id 
+     * @param bookDto 
      */
-    booksControllerUpdateBook(id: string, extraHttpRequestParams?: any): Observable<BookDto>;
+    booksControllerUpdateBook(id: string, bookDto: BookDto, extraHttpRequestParams?: any): Observable<BookDto>;
 
 }

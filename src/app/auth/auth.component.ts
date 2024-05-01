@@ -105,4 +105,12 @@ export class AuthComponent {
   onHandleError() {
     this.error = null;
   }
+
+  toggleLoginMode() {
+    if (!this.isLoading && this.loginForm.valid) {
+      this.isLoginMode = !this.isLoginMode;
+      this.error = null; // Reset any previous errors
+    }
+  }
+
 }

@@ -18,6 +18,7 @@ git_push.sh
 index.ts
 model/accessToken.ts
 model/bookDto.ts
+model/chapterDto.ts
 model/createUserDto.ts
 model/loginDto.ts
 model/models.ts

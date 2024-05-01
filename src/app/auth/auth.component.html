@@ -1,5 +1,5 @@
 <div class="flex justify-center items-center h-screen bg-gray-100">
-  <form class="p-8 bg-white shadow-md rounded-lg" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <form class="p-8 bg-white shadow-md rounded-lg" [formGroup]="loginForm">
     <h2 class="text-2xl mb-6">Login</h2>
     <mat-form-field class="w-full">
       <input matInput placeholder="Email" formControlName="email">
@@ -10,7 +10,15 @@
       <input matInput type="password" placeholder="Password" formControlName="password">
       <mat-error *ngIf="loginForm.get('password')?.hasError('required')">Password is required</mat-error>
     </mat-form-field>
-    <button class="mr-2" mat-raised-button color="primary">{{ isLoginMode ? 'Login' : 'Sign-up' }}</button>
+
+    <button class="mr-2" mat-raised-button color="primary" (click)="onSubmit()">{{ isLoginMode ? 'Login' : 'Sign-up' }}</button>
     <button mat-raised-button color="primary" (click)="isLoginMode = !isLoginMode">{{ !isLoginMode ? 'Switch to Login' : 'Switch to Sign-up' }}</button>
+
+    <!-- <button class="mr-2" mat-raised-button color="primary" type="submit" [disabled]="isLoading || !loginForm.valid">
+      {{ isLoginMode ? 'Login' : 'Sign-up' }}
+    </button>
+    <button mat-raised-button color="primary" (click)="toggleLoginMode()" [disabled]="isLoading">
+      {{ !isLoginMode ? 'Switch to Login' : 'Switch to Sign-up' }}
+    </button> -->
   </form>
 </div>

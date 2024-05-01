@@ -9,13 +9,12 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { ChapterDto } from './chapterDto';
 
 
-export interface BookDto { 
-    id: string;
-    name: string;
+export interface ChapterDto { 
+    title: string;
+    what: string;
+    how: string;
     whyRead: string;
-    chapters: Array<ChapterDto>;
 }
 

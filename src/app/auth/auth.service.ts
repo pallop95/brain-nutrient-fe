@@ -39,7 +39,7 @@ export class AuthService {
   }
 
   login(email: string, password: string): Observable<AccessToken> {
-    return this.authControllerService.authControllerRegister({ email, password }).pipe(
+    return this.authControllerService.authControllerLogin({ email, password }).pipe(
       tap(response => {
         if (response.access_token) this.setAuthToken(response.access_token);
       })
@@ -48,7 +48,7 @@ export class AuthService {
 
   logout(): Observable<any> {
     this.clearAuthToken();
-    return of(); // Assuming a successful logout action
+    return of(true); // Assuming a successful logout action
   }
 
   isAuthenticated(): Observable<boolean> {
@@ -56,7 +56,7 @@ export class AuthService {
   }
 
   getAuthToken(): string | null {
-    return this.authToken;
+    return this.authToken || localStorage.getItem('authToken');
   }
 
   private setAuthToken(token: string): void {

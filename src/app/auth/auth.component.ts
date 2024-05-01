@@ -61,6 +61,7 @@ export class AuthComponent {
     }
 
     authObs.subscribe(
+      /*
       resData => {
         console.log('AuthObs Token ::', resData);
         this.isLoading = false;
@@ -72,11 +73,31 @@ export class AuthComponent {
         console.log(errorMessage);
         this.error = errorMessage;
 
-        alert(this.error); // this.showErrorAlert(errorMessage);
+        alert(JSON.stringify(this.error)); // this.showErrorAlert(errorMessage);
         this.onHandleError();
 
         this.isLoading = false;
       }
+      */
+     {
+      next: (resData) => {
+        console.log('AuthObs Token ::', resData);
+        this.isLoading = false;
+        this.loginForm.reset();
+        this.loginForm.markAsPristine();
+        this.router.navigate(['/'])
+      },
+      error: (e) => {
+        console.error(email);
+        this.error = e;
+
+        alert(JSON.stringify(this.error)); // this.showErrorAlert(errorMessage);
+        this.onHandleError();
+
+        this.isLoading = false;
+      },
+      complete: () => console.info('authObs subscribe :: complete.')
+     }
     );
 
   }

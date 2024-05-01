@@ -10,7 +10,7 @@
       <input matInput type="password" placeholder="Password" formControlName="password">
       <mat-error *ngIf="loginForm.get('password')?.hasError('required')">Password is required</mat-error>
     </mat-form-field>
-    <button class="mr-2" mat-raised-button color="primary" type="submit">{{ isLoginMode ? 'Login' : 'Sign-up' }}</button>
-    <button mat-raised-button color="primary" type="submit" (click)="isLoginMode = !isLoginMode">{{ !isLoginMode ? 'Switch to Login' : 'Switch to Sign-up' }}</button>
+    <button class="mr-2" mat-raised-button color="primary">{{ isLoginMode ? 'Login' : 'Sign-up' }}</button>
+    <button mat-raised-button color="primary" (click)="isLoginMode = !isLoginMode">{{ !isLoginMode ? 'Switch to Login' : 'Switch to Sign-up' }}</button>
   </form>
 </div>

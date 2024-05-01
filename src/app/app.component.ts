@@ -40,8 +40,15 @@ export class AppComponent {
   }
 
   logout() {
-    this.authService.logout().subscribe(() => {
-      this.router.navigate(['auth']);
+    this.authService.logout().subscribe({
+      next: () => {
+        console.log('Logout successful');
+        this.router.navigate(['/auth']);
+      },
+      error: (err) => {
+        console.error('Logout error:', err);
+        // Handle error or retry logout if needed
+      }
     });
   }
 }

@@ -3,7 +3,7 @@
   <h2>ID: {{ id }}</h2>
 </div>
 
-<form *ngIf="bookForm" [formGroup]="bookForm" (ngSubmit)="onSubmit()" class="max-w-xl mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+<form *ngIf="bookForm" [formGroup]="bookForm" class="max-w-xl mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
   <!--
   <div class="mb-4">
     <label class="block text-gray-700 text-sm font-bold mb-2" for="id">
@@ -90,7 +90,7 @@
   </div>
   <button type="button" [disabled]="mode === 'view'" (click)="addChapter()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Add Chapter</button>
   <div class="flex items-center justify-between mt-4">
-    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" (click)="onSubmit()">
       {{ textSubmit }}
     </button>
   </div>

@@ -2,13 +2,14 @@ import { Component, input, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { IBook, IChapter, ModeFormType } from '../book.interface';
 // import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BookService } from '../book.service';
 import { MatButtonModule } from '@angular/material/button';
+import { ModeFormType } from '../book.interface';
+import { BookDto, ChapterDto } from '../../../../generated-sources/openapi';
 
 @Component({
   selector: 'app-book-form',
@@ -29,7 +30,7 @@ export class BookFormComponent implements OnInit {
   mode: ModeFormType | null = null;
   id: string | null = null;
 
-  book: IBook | null = null;
+  book: BookDto | null = null;
   bookForm!: FormGroup;
   isEditMode = false;
 
@@ -66,6 +67,7 @@ export class BookFormComponent implements OnInit {
         if (!this.id) return;
 
         this.bookService.getBookById(this.id).subscribe((book) => {
+          console.log('book ::', book);
           this.book = book;
 
           if(!this.book) return;
@@ -107,7 +109,7 @@ export class BookFormComponent implements OnInit {
   //   }
   // }
 
-  buildChapterForm(chapter?: IChapter): FormGroup {
+  buildChapterForm(chapter?: ChapterDto): FormGroup {
     return !chapter?
       this.fb.group({
         title: ['', Validators.required],

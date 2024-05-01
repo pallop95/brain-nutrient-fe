@@ -1,11 +1,13 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { map, take } from 'rxjs';
+import { map, take, tap } from 'rxjs';
 import { AuthService } from './auth.service';
 
 export const authGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
+  /*
+  // user case
   return authService.getCurrentUser().pipe(
     take(1),
     map(user => {
@@ -19,4 +21,14 @@ export const authGuard: CanActivateFn = (route, state) => {
       }
     })
   );
+  */
+  // token case
+  return authService.isAuthenticated().pipe(
+    tap(authenticated => {
+      if (!authenticated) {
+        router.navigate(['/auth']); // Redirect to login if not authenticated
+      }
+    })
+  );
+
 };

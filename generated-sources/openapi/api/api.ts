@@ -1,0 +1,16 @@
+export * from './authController.service';
+import { AuthControllerService } from './authController.service';
+export * from './authController.serviceInterface';
+export * from './booksController.service';
+import { BooksControllerService } from './booksController.service';
+export * from './booksController.serviceInterface';
+export * from './chaptersController.service';
+import { ChaptersControllerService } from './chaptersController.service';
+export * from './chaptersController.serviceInterface';
+export * from './swagger.service';
+import { SwaggerService } from './swagger.service';
+export * from './swagger.serviceInterface';
+export * from './usersController.service';
+import { UsersControllerService } from './usersController.service';
+export * from './usersController.serviceInterface';
+export const APIS = [AuthControllerService, BooksControllerService, ChaptersControllerService, SwaggerService, UsersControllerService];

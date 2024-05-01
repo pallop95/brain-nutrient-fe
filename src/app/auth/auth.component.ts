@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 import { UserCredential } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { AccessToken } from '../../../generated-sources/openapi';
 
 @Component({
   selector: 'app-auth',
@@ -49,7 +50,7 @@ export class AuthComponent {
     const { email, password } = this.loginForm.value;
 
     this.isLoading = true;
-    let authObs: Observable<UserCredential>;
+    let authObs: Observable<AccessToken>;
 
     if (this.isLoginMode) {
       // TODO: login
@@ -60,27 +61,56 @@ export class AuthComponent {
     }
 
     authObs.subscribe(
+      /*
       resData => {
-        console.log('AuthObs ::', resData);
+        console.log('AuthObs Token ::', resData);
         this.isLoading = false;
+        this.loginForm.reset();
+        this.loginForm.markAsPristine();
         this.router.navigate(['/'])
       },
       errorMessage => {
         console.log(errorMessage);
         this.error = errorMessage;
 
-        alert(this.error);
+        alert(JSON.stringify(this.error)); // this.showErrorAlert(errorMessage);
         this.onHandleError();
 
-        // this.showErrorAlert(errorMessage);
         this.isLoading = false;
       }
+      */
+     {
+      next: (resData) => {
+        console.log('AuthObs Token ::', resData);
+        this.isLoading = false;
+        this.loginForm.reset();
+        this.loginForm.markAsPristine();
+        this.router.navigate(['/'])
+      },
+      error: (e) => {
+        console.error(email);
+        this.error = e;
+
+        alert(JSON.stringify(this.error)); // this.showErrorAlert(errorMessage);
+        this.onHandleError();
+
+        this.isLoading = false;
+      },
+      complete: () => console.info('authObs subscribe :: complete.')
+     }
     );
 
-    this.loginForm.reset();
   }
 
   onHandleError() {
     this.error = null;
   }
+
+  toggleLoginMode() {
+    if (!this.isLoading && this.loginForm.valid) {
+      this.isLoginMode = !this.isLoginMode;
+      this.error = null; // Reset any previous errors
+    }
+  }
+
 }

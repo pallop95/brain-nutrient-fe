@@ -1,22 +1,23 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, of, switchMap } from 'rxjs';
-import { books, IBook } from './book.interface';
+import { BookDto, BooksControllerService } from '../../../generated-sources/openapi';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BookService {
 
-  apiUrl = 'https://brain-nutrient-default-rtdb.asia-southeast1.firebasedatabase.app/books.json';
-  // mockBooks = books;
-  books: IBook[] = [];
+  books: BookDto[] = [];
 
-  isFetchedFirstTime = false;
-  constructor(private http: HttpClient) {}
+  // isFetchedFirstTime = false;
+  constructor(
+    private bookControllerService: BooksControllerService,
+  ) {}
 
-  getBooks(): Observable<IBook[]> {
-    this.isFetchedFirstTime = true;
+  getBooks(): Observable<BookDto[]> {
+    // this.isFetchedFirstTime = true;
+    /*
     return this.http.get<IBook[]>(this.apiUrl).pipe(
       switchMap(books => {
         this.books = books || [];
@@ -27,29 +28,36 @@ export class BookService {
         return of([]);
       })
     );
+    */
+   return this.bookControllerService.booksControllerFindAllBooks();
   }
 
-  getBookById(id: string): Observable<IBook | null> {
-      return this.getBooks().pipe(
-        switchMap(books => {
-          const foundBook = books.find(book => book.id === id) || null;
-          return of(foundBook);
-        })
-      );
+  getBookById(id: string): Observable<BookDto | null> {
+    /*
+    return this.getBooks().pipe(
+      switchMap(books => {
+        const foundBook = books.find(book => book.id === id) || null;
+        return of(foundBook);
+      })
+    );
+    */
+    return this.bookControllerService.booksControllerFindBookById(id);
   }
 
-  addBook(book: IBook): Observable<void> {
+  addBook(book: BookDto): Observable<BookDto> {
+    /*
     // return this.http.post<IBook>(this.apiUrl, book);
 
     const newBook = { ...book, id: this.generateUniqueId() }
     this.books.push(newBook);
 
     return this.putBooks(this.books);
+    */
+   return this.bookControllerService.booksControllerCreateBook(book);
   }
 
-  updateBook(book: IBook): Observable<IBook | null> {
-    // return this.http.put<IBook>(`${this.apiUrl}/${book.id}`, book);
-
+  updateBook(book: BookDto): Observable<BookDto | null> {
+    /*
     const updatedBook = {
       ...book,
     }
@@ -62,26 +70,18 @@ export class BookService {
       switchMap(() => of(book))
     );
 
-    // return of(updatedBook); // TODO: check
+    return of(updatedBook); // TODO: check
+    */
+    return this.bookControllerService.booksControllerUpdateBook(book.id, book);
   }
 
   deleteBook(id: string): Observable<void> {
+    /*
     // return this.http.delete<void>(`${this.apiUrl}/${id}`);
 
     this.books = this.books.filter(book => book.id !== id);
     return this.putBooks(this.books);
-  }
-
-  private putBooks(books: IBook[]): Observable<void> {
-    return this.http.put<void>(this.apiUrl, books.slice()).pipe(
-      catchError(error => {
-        console.error('Error updateing Books:', error);
-        return of();
-      })
-    )
-  }
-
-  private generateUniqueId(): string {
-    return Math.random().toString(36).substring(2, 9);
+    */
+   return this.bookControllerService.booksControllerDeleteBook(id);
   }
 }

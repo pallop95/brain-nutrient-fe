@@ -1,0 +1,643 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/": {
+      "get": {
+        "operationId": "AppController_getHello",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Swagger"
+        ]
+      }
+    },
+    "/json": {
+      "get": {
+        "operationId": "AppController_getJson",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Swagger JSON file"
+          }
+        },
+        "tags": [
+          "Swagger"
+        ]
+      }
+    },
+    "/books": {
+      "post": {
+        "operationId": "BooksController_createBook",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BookDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "BooksController"
+        ]
+      },
+      "get": {
+        "operationId": "BooksController_findAllBooks",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BookDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "BooksController"
+        ]
+      }
+    },
+    "/books/{id}": {
+      "put": {
+        "operationId": "BooksController_updateBook",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BookDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "BooksController"
+        ]
+      },
+      "delete": {
+        "operationId": "BooksController_deleteBook",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "BooksController"
+        ]
+      },
+      "get": {
+        "operationId": "BooksController_findBookById",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "BooksController"
+        ]
+      }
+    },
+    "/chapters": {
+      "post": {
+        "operationId": "ChaptersController_createChapter",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChapterDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChapterDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "ChaptersController"
+        ]
+      },
+      "get": {
+        "operationId": "ChaptersController_findAllChaptersS",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ChapterDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "ChaptersController"
+        ]
+      }
+    },
+    "/chapters/{id}": {
+      "put": {
+        "operationId": "ChaptersController_updateChapter",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChapterDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChapterDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "ChaptersController"
+        ]
+      },
+      "delete": {
+        "operationId": "ChaptersController_deleteChapter",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "ChaptersController"
+        ]
+      },
+      "get": {
+        "operationId": "ChaptersController_findChapterById",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChapterDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "ChaptersController"
+        ]
+      }
+    },
+    "/users": {
+      "post": {
+        "operationId": "UserController_createUser",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "UsersController"
+        ]
+      }
+    },
+    "/users/{email}": {
+      "get": {
+        "operationId": "UserController_getUserByEmail",
+        "parameters": [
+          {
+            "name": "email",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "UsersController"
+        ]
+      },
+      "patch": {
+        "operationId": "UserController_updateUser",
+        "parameters": [
+          {
+            "name": "email",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "UsersController"
+        ]
+      },
+      "delete": {
+        "operationId": "UserController_deleteUser",
+        "parameters": [
+          {
+            "name": "email",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "UsersController"
+        ]
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "operationId": "AuthController_login",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccessToken"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "AuthController"
+        ]
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "operationId": "AuthController_register",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccessToken"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "AuthController"
+        ]
+      }
+    },
+    "/auth/refresh-token": {
+      "post": {
+        "operationId": "AuthController_refreshToken",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshTokenDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccessToken"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "AuthController"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Brain Nutrient API",
+    "description": "API documentation for Brain Nutrient project",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [
+    {
+      "url": "localhost:3000"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearer": {
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "type": "http"
+      }
+    },
+    "schemas": {
+      "ChapterDto": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "Chapter 1"
+          },
+          "what": {
+            "type": "string",
+            "example": "step1"
+          },
+          "how": {
+            "type": "string",
+            "example": "Just read"
+          },
+          "whyRead": {
+            "type": "string",
+            "example": "For god sake"
+          }
+        },
+        "required": [
+          "title",
+          "what",
+          "how",
+          "whyRead"
+        ]
+      },
+      "BookDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "123456"
+          },
+          "name": {
+            "type": "string",
+            "example": "How to use this app."
+          },
+          "whyRead": {
+            "type": "string",
+            "example": "Know how to use this app."
+          },
+          "chapters": {
+            "example": [],
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChapterDto"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "whyRead",
+          "chapters"
+        ]
+      },
+      "CreateUserDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "pallop.bunnak@gmail.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "123456"
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ]
+      },
+      "UpdateUserDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "LoginDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "pallop.bunnak@gmail.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "123456"
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ]
+      },
+      "AccessToken": {
+        "type": "object",
+        "properties": {
+          "access_token": {
+            "type": "string",
+            "example": "Uvuvuvuvu-uvumvum-Ossas"
+          }
+        },
+        "required": [
+          "access_token"
+        ]
+      },
+      "RefreshTokenDto": {
+        "type": "object",
+        "properties": {}
+      }
+    }
+  }
+}

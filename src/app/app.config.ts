@@ -21,6 +21,11 @@ import { getPerformance, providePerformance } from '@angular/fire/performance';
 import { getStorage, provideStorage } from '@angular/fire/storage';
 import { firebaseConfig } from '../environments/environment';
 import { authInterceptor } from './auth/auth.interceptor';
+import { provideEffects } from '@ngrx/effects';
+import { provideStore } from '@ngrx/store';
+import { authReducer } from './auth/store/auth.reducer';
+import { AuthEffects } from './auth/store/auth.effects';
+import * as fromApp from './store/app.reducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -41,5 +46,9 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(
       withInterceptors([authInterceptor])
     ), // https://angular.dev/guide/http/setup#providing-httpclient-through-dependency-injection
+    provideStore(fromApp.appReducer),
+    provideEffects(
+      AuthEffects,
+    ),
   ]
 };

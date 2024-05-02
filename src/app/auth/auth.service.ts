@@ -1,5 +1,6 @@
 import { inject, Injectable } from '@angular/core';
-import { from, Observable, of, tap } from 'rxjs';
+import { select, Store } from '@ngrx/store';
+import { from, Observable, of, Subscription, tap } from 'rxjs';
 /*
 import {
   Auth,
@@ -16,6 +17,7 @@ import {
 import { Firestore } from 'firebase/firestore';
 */
 import { AccessToken, AuthControllerService } from '../../../generated-sources/openapi';
+// import * as AuthActions from './auth.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -29,9 +31,13 @@ export class AuthService {
   */
   private authToken: string | null = null;
 
+  // isLoading$: Observable<boolean>;
   constructor(
     private authControllerService: AuthControllerService,
-  ) { }
+    private readonly store: Store,
+    ) {
+    // this.isLoading$ = this.store.pipe(select(AuthActions.));
+  }
 
   signUp(email: string, password: string): Observable<AccessToken> {
     // return from(createUserWithEmailAndPassword(this.afAuth, email, password));
@@ -39,12 +45,16 @@ export class AuthService {
   }
 
   login(email: string, password: string): Observable<AccessToken> {
-    return this.authControllerService.authControllerLogin({ email, password }).pipe(
-      tap(response => {
-        if (response.access_token) this.setAuthToken(response.access_token);
-      })
-    );
+    return this.authControllerService.authControllerLogin({ email, password })
+      /*
+      .pipe(
+        tap(response => {
+          if (response.access_token) this.setAuthToken(response.access_token);
+        })
+      );
+      */
   }
+
 
   logout(): Observable<any> {
     this.clearAuthToken();
@@ -59,11 +69,13 @@ export class AuthService {
     return this.authToken || localStorage.getItem('authToken');
   }
 
+  /*
   private setAuthToken(token: string): void {
     this.authToken = token;
     // Optionally, you can save the token to local storage or session storage for persistence
     localStorage.setItem('authToken', token);
   }
+  */
 
   private clearAuthToken(): void {
     this.authToken = null;

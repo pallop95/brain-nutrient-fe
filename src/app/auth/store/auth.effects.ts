@@ -21,7 +21,8 @@ export interface AuthResponseData {
 }
 
 const handleAuthentication = (
-  accessToken: AccessToken
+  accessToken: AccessToken,
+  redirect: boolean,
 ) => {
 
   return AuthActions.authenticateSuccess({
@@ -30,7 +31,8 @@ const handleAuthentication = (
     // token: token,
     // expirationDate: expirationDate,
     // redirect: true
-    accessToken
+    accessToken,
+    redirect,
   });
 };
 
@@ -113,7 +115,7 @@ export class AuthEffects {
           // TODO: can we reuse .pipe()?
           // TODO: merge login$ & authSignup$
           map(accessToken => {
-            return handleAuthentication(accessToken);
+            return handleAuthentication(accessToken, true);
           }),
           catchError(errorRes => {
             return handleError(errorRes);
@@ -121,7 +123,7 @@ export class AuthEffects {
     )
   );
 
-  refrashTokenStart$ = createEffect(() =>
+  refreshTokenStart$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.REFRESH_TOKEN_START),
       switchMap(({ authToken }) => {
@@ -129,7 +131,7 @@ export class AuthEffects {
       }))
         .pipe(
           map(accessToken => {
-            return handleAuthentication(accessToken);
+            return handleAuthentication(accessToken, false);
           }),
           catchError(errorRes => {
             return handleError(errorRes);
@@ -145,7 +147,7 @@ export class AuthEffects {
       }))
         .pipe(
           map(accessToken => {
-            return handleAuthentication(accessToken);
+            return handleAuthentication(accessToken, true);
           }),
           catchError(errorRes => {
             return handleError(errorRes);
@@ -156,10 +158,10 @@ export class AuthEffects {
   authRedirect$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.AUTHENTICATE_SUCCESS),
-      tap(() => {
-        // if (authSuccessAction.payload.redirect) {
-        this.router.navigate(['/']);
-        // }
+      tap(({ redirect }) => {
+        if (!!redirect) {
+          this.router.navigate(['/']);
+        }
       })
     ),
     { dispatch: false } // Specify that this effect does not dispatch any actions

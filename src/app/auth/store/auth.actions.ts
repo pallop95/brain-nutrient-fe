@@ -16,6 +16,7 @@ export const authenticateSuccess = createAction(
   props<{
     // TODO: what is this partial 'book: Partial<IBook>;'
     accessToken: AccessToken;
+    redirect: boolean;
 }>()
 );
 

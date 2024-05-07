@@ -35,6 +35,10 @@ import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
         padding: 1rem;
         max-width: 400px;
       }
+
+      button {
+        margin-right: 8px;
+      }
     `,
   ]
 })

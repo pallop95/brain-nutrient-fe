@@ -56,22 +56,13 @@ export function authReducer(
       return state;
   }
 }
+export function reducer(
+  state = initialState,
+  action: AuthActions.AuthActions
+)
 */
-// export function reducer(
-//   state = initialState,
-//   action: AuthActions.AuthActions
-// )
 const reducer = createReducer<State>(
   initialState,
-  // switch (action.type) {
-  //   case AuthActions.AUTHENTICATE_SUCCESS:
-  //     const accessToken = { ...action.payload };
-  //     return {
-  //       ...state,
-  //       authError: null,
-  //       accessToken, // user = new User(...)
-  //       loading: false
-  //     };
   on(
     AuthActions.authenticateSuccess,
     (state, { accessToken }) => {
@@ -80,34 +71,20 @@ const reducer = createReducer<State>(
       ...state,
       authError: null,
       accessToken: { ...accessToken },
-      loading: false
+      loading: false,
     };
   }),
-
-  //   case AuthActions.LOGOUT:
-  //     return {
-  //       ...state,
-  //       accessToken: null, // user: null,
-  //     };
   on(AuthActions.logout, (state) => {
     return {
       ...state,
       accessToken: null,
     }
   }),
-
-  //   case AuthActions.LOGIN_START:
-  //   case AuthActions.SIGNUP_START:
-  //     return {
-  //       ...state,
-  //       authError: null,
-  //       loading: true
-  //     };
   on(AuthActions.loginStart, AuthActions.signupStart , (state, { email, password }) => {
     return {
       ...state,
       authError: null,
-      loading: true
+      loading: true,
     };
   }),
 
@@ -115,23 +92,15 @@ const reducer = createReducer<State>(
     return {
       ...state,
       authError: null,
-      loading: true
+      loading: false,
     };
   }),
-
-  //   case AuthActions.AUTHENTICATE_FAIL:
-  //     return {
-  //       ...state,
-  //       accessToken: null, // user: null,
-  //       authError: action.payload,
-  //       loading: false
-  //     };
   on(AuthActions.authenticateFail , (state, { authError }) => {
     return {
       ...state,
       accessToken: null,
       authError: authError,
-      loading: false
+      loading: false,
     };
   }),
   //   case AuthActions.CLEAR_ERROR:

@@ -32,7 +32,7 @@ export class BookService {
    return this.bookControllerService.booksControllerFindAllBooks();
   }
 
-  getBookById(id: string): Observable<BookDto | null> {
+  getBookById(id: string): Observable<BookDto> {
     /*
     return this.getBooks().pipe(
       switchMap(books => {

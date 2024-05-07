@@ -72,7 +72,9 @@ const reducer = createReducer<State>(
   //       accessToken, // user = new User(...)
   //       loading: false
   //     };
-  on(AuthActions.authenticateSuccess, (state, { accessToken }) => {
+  on(
+    AuthActions.authenticateSuccess,
+    (state, { accessToken }) => {
     // const accessToken = { ...state.payload };
     return {
       ...state,
@@ -93,6 +95,7 @@ const reducer = createReducer<State>(
       accessToken: null,
     }
   }),
+
   //   case AuthActions.LOGIN_START:
   //   case AuthActions.SIGNUP_START:
   //     return {
@@ -107,6 +110,15 @@ const reducer = createReducer<State>(
       loading: true
     };
   }),
+
+  on(AuthActions.refreshTokenStart, (state, { authToken }) => {
+    return {
+      ...state,
+      authError: null,
+      loading: true
+    };
+  }),
+
   //   case AuthActions.AUTHENTICATE_FAIL:
   //     return {
   //       ...state,

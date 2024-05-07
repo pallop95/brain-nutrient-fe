@@ -26,6 +26,7 @@ import { provideStore } from '@ngrx/store';
 import { authReducer } from './auth/store/auth.reducer';
 import { AuthEffects } from './auth/store/auth.effects';
 import * as fromApp from './store/app.reducer';
+import { BookEffects } from './book/store/book.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -49,6 +50,7 @@ export const appConfig: ApplicationConfig = {
     provideStore(fromApp.appReducer),
     provideEffects(
       AuthEffects,
+      BookEffects,
     ),
   ]
 };

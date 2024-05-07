@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -8,11 +8,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { BookService } from './book.service';
-import { Observable } from 'rxjs';
+import { from, Observable, Subscription } from 'rxjs';
 import { ConfirmDialogComponent } from '../shared/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { BookDto } from '../../../generated-sources/openapi';
 import { ModeFormType } from './book.interface';
+import { select, Store } from '@ngrx/store';
+import * as fromBooks from './store/index';
 @Component({
   selector: 'app-book',
   standalone: true,
@@ -28,38 +30,54 @@ import { ModeFormType } from './book.interface';
   templateUrl: './book.component.html',
   styleUrl: './book.component.scss'
 })
-export class BookComponent implements OnInit, AfterViewInit  {
-  // books$: Observable<BookDto[]>;
+export class BookComponent implements OnDestroy, AfterViewInit  {
+  books$: Observable<BookDto[] | null>;
+  booksSubscription: Subscription;
+
+  isLoading$: Observable<boolean>;
+  // isLoadingSubscription: Subscription;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   displayedColumns: string[] = ['name', 'whyRead', 'action'];
   dataSource: MatTableDataSource<BookDto>;
 
-  books: BookDto[] = [];
+  // books: BookDto[] = [];
 
   constructor(
     private router: Router,
     private dialog: MatDialog,
-    private bookService: BookService, // TODO: remove (we want ngrx/store)
+    private store: Store,
   ) {
+    this.initDispatch();
+    this.books$ = this.store.pipe(select(fromBooks.selectors.selectBookList));
+    this.isLoading$ = this.store.pipe(select(fromBooks.selectors.selectBookIsLoading));
+
     this.dataSource = new MatTableDataSource<BookDto>();
-    // TODO: ngrx/store to get the books
-    // this.books$ = this.store.select(...);
 
-    // TODO: remove this below?
-    this.getBooks();
-  }
+    this.booksSubscription = this.books$.subscribe((books: BookDto[] | null) => {
+      console.log('New value received from books$:', books);
+      if (!books) return;
 
-  getBooks() {
-    this.bookService.getBooks().subscribe(books => {
-      this.books = books;
-      console.log('new books from subscribe', this.books);
-      this.dataSource.data = [ ...this.books ];
+      // this.books = books;
+      this.dataSource.data = [ ...books ];
+      // Perform manipulation or other actions with the received books array
     });
+
+    // this.isLoadingSubscription = this.isLoading$.subscribe((isLoading: boolean) => {
+    //   debugger;
+    //   if (!isLoading) {
+    //     this.initDispatch();
+
+    //     // Loading has finished, perform any necessary actions
+    //     // this.dataSource.paginator = this.paginator;
+    //   }
+    // });
+    // TODO: remove this below?
+    // this.getBooks();
   }
 
-  ngOnInit() {
-    // this.books = await this.bookService.getBooks();
+  private initDispatch(): void {
+    this.store.dispatch(fromBooks.actions.getBooksStart());
   }
 
   ngAfterViewInit() {
@@ -90,9 +108,15 @@ export class BookComponent implements OnInit, AfterViewInit  {
   }
 
   private deleteBook(book: BookDto) {
-    this.bookService.deleteBook(book.id).subscribe((books) => {
-      this.getBooks();
-    });
+    // this.bookService.deleteBook(book.id).subscribe((books) => {
+    //   this.getBooks();
+    // });
+    this.store.dispatch(fromBooks.actions.deleteBookStart({ id: book?.id }));
+  }
 
+  ngOnDestroy(): void {
+    if (this.booksSubscription) {
+      this.booksSubscription.unsubscribe();
+    }
   }
 }

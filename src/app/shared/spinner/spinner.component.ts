@@ -10,7 +10,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   standalone: true,
   imports: [CommonModule, MatProgressSpinnerModule],
   template: `
-    {{ authIsLoading$ | async }}
+    <!-- {{ authIsLoading$ | async }} -->
     <div class="overlay" *ngIf="authIsLoading$ | async">
       <mat-progress-spinner [diameter]="50" [mode]="'indeterminate'"></mat-progress-spinner>
     </div>

@@ -23,7 +23,6 @@ export interface AuthResponseData {
 const handleAuthentication = (
   accessToken: AccessToken
 ) => {
-  localStorage.setItem('authToken', accessToken.access_token);
 
   return AuthActions.authenticateSuccess({
     // email: email,
@@ -101,15 +100,16 @@ export class AuthEffects {
       ofType(AuthActions.LOGIN_START),
       switchMap(({email, password}) => {
         return this.authService.login(email, password)
-
-        // TODO: try to take action as condition, return this.authService.signUp(email, password)
       }))
         .pipe(
-          /* TODO: auto-logout, auto-login
+          /* TIPS: example resData
           tap(resData => {
             this.authService.setLogoutTimer(+resData.expiresIn * 1000);
           }),
           */
+          tap(resData => {
+            this.authService.setRefreshTokenTimer( 3 /* 60 * 5 */ * 1000);
+          }),
           // TODO: can we reuse .pipe()?
           // TODO: merge login$ & authSignup$
           map(accessToken => {
@@ -121,21 +121,37 @@ export class AuthEffects {
     )
   );
 
+  refrashTokenStart$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.REFRESH_TOKEN_START),
+      switchMap(({ authToken }) => {
+        return this.authService.refreshToken(authToken);
+      }))
+        .pipe(
+          map(accessToken => {
+            return handleAuthentication(accessToken);
+          }),
+          catchError(errorRes => {
+            return handleError(errorRes);
+          })
+    )
+  );
+
   authSignup$ = createEffect(() =>
-  this.actions$.pipe(
-    ofType(AuthActions.SIGNUP_START),
-    switchMap(({email, password}) => {
-      return this.authService.signUp(email, password)
-    }))
-      .pipe(
-        map(accessToken => {
-          return handleAuthentication(accessToken);
-        }),
-        catchError(errorRes => {
-          return handleError(errorRes);
-        })
-  )
-);
+    this.actions$.pipe(
+      ofType(AuthActions.SIGNUP_START),
+      switchMap(({email, password}) => {
+        return this.authService.signUp(email, password)
+      }))
+        .pipe(
+          map(accessToken => {
+            return handleAuthentication(accessToken);
+          }),
+          catchError(errorRes => {
+            return handleError(errorRes);
+          })
+    )
+  );
 
   authRedirect$ = createEffect(() =>
     this.actions$.pipe(
@@ -199,7 +215,6 @@ export class AuthEffects {
       ofType(AuthActions.LOGOUT),
       tap(() => {
         // this.authService.clearLogoutTimer(); // clear for auth-login
-        localStorage.removeItem('authToken');
         this.router.navigate(['/auth']);
       })
     ),

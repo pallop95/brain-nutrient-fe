@@ -2,7 +2,11 @@
   <button mat-raised-button color="primary" (click)="onCRUClick('create')">Create</button>
 </div>
 
-<div class="mat-elevation-z8">
+<div *ngIf="{
+    books: books$ | async,
+    isLoading: isLoading$ | async
+  } as data" class="mat-elevation-z8"
+>
   <table mat-table [dataSource]="dataSource">
 
     <!-- Position Column -->

@@ -1,4 +1,4 @@
-import { Component, input, Input, OnInit } from '@angular/core';
+import { Component, input, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -10,6 +10,9 @@ import { BookService } from '../book.service';
 import { MatButtonModule } from '@angular/material/button';
 import { ModeFormType } from '../book.interface';
 import { BookDto, ChapterDto } from '../../../../generated-sources/openapi';
+import { select, Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
+import * as fromBooks from '../store/index';
 
 @Component({
   selector: 'app-book-form',
@@ -25,21 +28,29 @@ import { BookDto, ChapterDto } from '../../../../generated-sources/openapi';
   templateUrl: './book-form.component.html',
   styleUrl: './book-form.component.scss'
 })
-export class BookFormComponent implements OnInit {
+export class BookFormComponent implements OnInit, OnDestroy {
+  selectedBook$: Observable<BookDto | null>;
+  isLoading$: Observable<boolean>;
+  bookSubscription: Subscription;
+
   textSubmit: 'Save' | 'Back' = 'Save';
   mode: ModeFormType | null = null;
   id: string | null = null;
 
-  book: BookDto | null = null;
+  // book: BookDto | null = null;
   bookForm!: FormGroup;
   isEditMode = false;
 
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private bookService: BookService,
+    // private bookService: BookService,
     private router: Router,
-  ) {
+    private store: Store,
+    ) {
+    this.selectedBook$ = this.store.pipe(select(fromBooks.selectors.selectSelectedBook));
+    this.isLoading$ = this.store.pipe(select(fromBooks.selectors.selectBookIsLoading));
+
     this.route.queryParams.subscribe(params => {
       this.mode = params['mode'] ?? 'create'; // Access 'mode' parameter
       this.id = params['id']; // Access 'id' parameter
@@ -47,8 +58,32 @@ export class BookFormComponent implements OnInit {
       console.log('mode ::', this.mode);
       console.log('id ::', this.id);
 
+
       this.textSubmit = this.mode === 'view' ? 'Back' : 'Save';
     });
+
+    this.bookSubscription = this.selectedBook$.subscribe((selectedBook: BookDto | null) => {
+      console.log('selectedBook ::', selectedBook);
+      // this.book = selectedBook;
+
+      if(!selectedBook) return;
+
+      const tempChapters = this.fb.array(
+        selectedBook.chapters?.map(chapter => this.buildChapterForm(chapter)) ?? []
+      );
+      console.log('tempChapters ::', tempChapters);
+
+      this.bookForm = this.fb.group({
+        id: [selectedBook.id, Validators.required],
+        name: [selectedBook?.name, Validators.required],
+        whyRead: [selectedBook?.whyRead, Validators.required],
+        chapters: tempChapters,
+      });
+    });
+  }
+
+  initDispatch(id :string) {
+    this.store.dispatch(fromBooks.actions.getBookStart({ id }));
   }
 
   ngOnInit(): void {
@@ -66,28 +101,17 @@ export class BookFormComponent implements OnInit {
       case 'view':
         if (!this.id) return;
 
-        this.bookService.getBookById(this.id).subscribe((book) => {
-          console.log('book ::', book);
-          this.book = book;
-
-          if(!this.book) return;
-
-          const tempChapters = this.fb.array(
-            this.book.chapters?.map(chapter => this.buildChapterForm(chapter)) ?? []
-          );
-          console.log('tempChapters ::', tempChapters);
-
-          this.bookForm = this.fb.group({
-            id: [this.book.id, Validators.required],
-            name: [this.book?.name, Validators.required],
-            whyRead: [this.book?.whyRead, Validators.required],
-            chapters: tempChapters,
-          });
-        });
+        this.initDispatch(this.id);
         break;
       default:
         console.log('WTF!!!');
         break;
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.bookSubscription) {
+      this.bookSubscription.unsubscribe();
     }
   }
 
@@ -143,14 +167,10 @@ export class BookFormComponent implements OnInit {
       }
       switch (this.mode) {
         case 'create':
-          this.bookService.addBook(this.bookForm.value).subscribe(() => {
-            this.router.navigate(['/book']);
-          });
+          this.store.dispatch(fromBooks.actions.createBookStart({ newBook: this.bookForm.value }));
           break;
         case 'update':
-          this.bookService.updateBook(this.bookForm.value).subscribe(() => {
-            this.router.navigate(['/book']);
-          });
+          this.store.dispatch(fromBooks.actions.updateBookStart({ updateBook: this.bookForm.value }));
           break;
         default:
           break;

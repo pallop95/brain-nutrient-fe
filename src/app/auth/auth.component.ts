@@ -10,7 +10,8 @@ import { AuthService } from './auth.service';
 import { UserCredential } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { AccessToken } from '../../../generated-sources/openapi';
-
+import { Store } from '@ngrx/store';
+import * as AuthActions from './store/auth.actions';
 @Component({
   selector: 'app-auth',
   standalone: true,
@@ -35,8 +36,9 @@ export class AuthComponent {
 
   constructor(
     private formBuilder: FormBuilder,
-    private authService: AuthService,
-    private router: Router,
+    // private authService: AuthService,
+    private readonly store: Store,
+    // private router: Router,
   ) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -54,63 +56,51 @@ export class AuthComponent {
 
     if (this.isLoginMode) {
       // TODO: login
-      authObs = this.authService.login(email, password);
+      // authObs = this.authService.login(email, password);
+      this.store.dispatch(AuthActions.loginStart({
+        email, password
+      }))
     } else {
       // TODO: sign-up
-      authObs = this.authService.signUp(email, password);
+      // authObs = this.authService.signUp(email, password);
+      this.store.dispatch(AuthActions.signupStart({
+        email, password
+      }))
     }
 
-    authObs.subscribe(
-      /*
-      resData => {
-        console.log('AuthObs Token ::', resData);
-        this.isLoading = false;
-        this.loginForm.reset();
-        this.loginForm.markAsPristine();
-        this.router.navigate(['/'])
-      },
-      errorMessage => {
-        console.log(errorMessage);
-        this.error = errorMessage;
+  //   authObs.subscribe(
+  //    {
+  //     next: (resData) => {
+  //       console.log('AuthObs Token ::', resData);
+  //       this.isLoading = false;
+  //       this.loginForm.reset();
+  //       this.loginForm.markAsPristine();
+  //       this.router.navigate(['/'])
+  //     },
+  //     error: (e) => {
+  //       console.error(email);
+  //       this.error = e;
 
-        alert(JSON.stringify(this.error)); // this.showErrorAlert(errorMessage);
-        this.onHandleError();
+  //       alert(JSON.stringify(this.error)); // this.showErrorAlert(errorMessage);
+  //       this.onHandleError();
 
-        this.isLoading = false;
-      }
-      */
-     {
-      next: (resData) => {
-        console.log('AuthObs Token ::', resData);
-        this.isLoading = false;
-        this.loginForm.reset();
-        this.loginForm.markAsPristine();
-        this.router.navigate(['/'])
-      },
-      error: (e) => {
-        console.error(email);
-        this.error = e;
-
-        alert(JSON.stringify(this.error)); // this.showErrorAlert(errorMessage);
-        this.onHandleError();
-
-        this.isLoading = false;
-      },
-      complete: () => console.info('authObs subscribe :: complete.')
-     }
-    );
+  //       this.isLoading = false;
+  //     },
+  //     complete: () => console.info('authObs subscribe :: complete.')
+  //    }
+  //   );
 
   }
 
-  onHandleError() {
-    this.error = null;
-  }
+  // onHandleError() {
+  //   this.error = null;
+  // }
 
-  toggleLoginMode() {
-    if (!this.isLoading && this.loginForm.valid) {
-      this.isLoginMode = !this.isLoginMode;
-      this.error = null; // Reset any previous errors
-    }
-  }
+  // toggleLoginMode() {
+  //   if (!this.isLoading && this.loginForm.valid) {
+  //     this.isLoginMode = !this.isLoginMode;
+  //     this.error = null; // Reset any previous errors
+  //   }
+  // }
 
 }

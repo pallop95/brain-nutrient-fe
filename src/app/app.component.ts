@@ -7,6 +7,9 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { AuthService } from './auth/auth.service';
+import { SpinnerComponent } from './shared/spinner/spinner.component';
+import { Store } from '@ngrx/store';
+import * as fromAuth from './auth/store/index'
 
 @Component({
   selector: 'app-root',
@@ -18,17 +21,19 @@ import { AuthService } from './auth/auth.service';
     MatMenuModule,
     MatButtonModule,
     MatIconModule,
+    SpinnerComponent,
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  private authService = inject(AuthService);
+  // private authService = inject(AuthService);
   isAuthRoute!: boolean;
   title = 'brain-nutrient-fe';
 
   constructor(
     private router: Router,
+    private store: Store,
   ) {
     this.router.events.subscribe((event) => {
       if (this.router.url === '/auth') {
@@ -40,6 +45,7 @@ export class AppComponent {
   }
 
   logout() {
+    /*
     this.authService.logout().subscribe({
       next: () => {
         console.log('Logout successful');
@@ -50,5 +56,7 @@ export class AppComponent {
         // Handle error or retry logout if needed
       }
     });
+    */
+   this.store.dispatch(fromAuth.actions.logout());
   }
 }

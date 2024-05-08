@@ -1,19 +1,21 @@
-  <mat-toolbar *ngIf="!isAuthRoute" color="primary">
-    <span>Brain Nutrient</span>
+<mat-toolbar *ngIf="!isAuthRoute" color="primary">
+  <span>Brain Nutrient</span>
 
-    <span class="fill-remaining-space"></span>
+  <span class="fill-remaining-space"></span>
 
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item routerLink="" routerLinkActive="active">Main</button>
-      <button mat-menu-item routerLink="/book" routerLinkActive="active">Book</button>
-    </mat-menu>
-    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu">
-      <mat-icon>menu</mat-icon>
-    </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item routerLink="" routerLinkActive="active">Main</button>
+    <button mat-menu-item routerLink="/book" routerLinkActive="active">Book</button>
+  </mat-menu>
+  <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu">
+    <mat-icon>menu</mat-icon>
+  </button>
 
-    <button mat-button color="warn" (click)="logout()">Logout</button>
-  </mat-toolbar>
+  <button mat-button color="warn" (click)="logout()">Logout</button>
+</mat-toolbar>
 
-  <div [ngClass]="{ 'container mx-auto px-4 py-4': !isAuthRoute }">
-    <router-outlet></router-outlet>
-  </div>
+<div [ngClass]="{ 'container mx-auto px-4 py-4': !isAuthRoute }">
+  <router-outlet></router-outlet>
+</div>
+
+<app-spinner></app-spinner>

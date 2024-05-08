@@ -1,1 +1,34 @@
-<p>dummy works!</p>
+<div class="container mx-auto p-6">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div class="bg-white p-4 shadow rounded-lg">
+      <h2 class="text-lg font-semibold mb-2">Generate BadRequestError</h2>
+      <p class="text-gray-600 mb-4">Call the API to generate a BadRequestError.</p>
+      <button mat-raised-button color="primary" (click)="generateBadRequestError()">Generate Error</button>
+    </div>
+    <div class="bg-white p-4 shadow rounded-lg">
+      <h2 class="text-lg font-semibold mb-2">Generate InternalServerError</h2>
+      <p class="text-gray-600 mb-4">Call the API to generate an InternalServerError.</p>
+      <button mat-raised-button color="primary" (click)="generateInternalServerError()">Generate Error</button>
+    </div>
+    <div class="bg-white p-4 shadow rounded-lg">
+      <h2 class="text-lg font-semibold mb-2">Generate NotFoundError</h2>
+      <p class="text-gray-600 mb-4">Call the API to generate a NotFoundError.</p>
+      <button mat-raised-button color="primary" (click)="generateNotFoundError()">Generate Error</button>
+    </div>
+    <div class="bg-white p-4 shadow rounded-lg">
+      <h2 class="text-lg font-semibold mb-2">Generate TimeoutError</h2>
+      <p class="text-gray-600 mb-4">Call the API to generate a TimeoutError.</p>
+      <button mat-raised-button color="primary" (click)="generateTimeoutError()">Generate Error</button>
+    </div>
+    <div class="bg-white p-4 shadow rounded-lg">
+      <h2 class="text-lg font-semibold mb-2">Generate UnauthorizedError</h2>
+      <p class="text-gray-600 mb-4">Call the API to generate an UnauthorizedError.</p>
+      <button mat-raised-button color="primary" (click)="generateUnauthorizedError()">Generate Error</button>
+    </div>
+    <div class="bg-white p-4 shadow rounded-lg">
+      <h2 class="text-lg font-semibold mb-2">Generate ValidationError</h2>
+      <p class="text-gray-600 mb-4">Call the API to generate a ValidationError with ID 1.</p>
+      <button mat-raised-button color="primary" (click)="generateValidationError(1)">Generate Error</button>
+    </div>
+  </div>
+</div>

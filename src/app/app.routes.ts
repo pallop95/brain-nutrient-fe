@@ -16,5 +16,9 @@ export const routes: Routes = [
     loadChildren: () => import('./features/book/book.routes').then((mod) => mod.BOOK_ROUTES),
     canActivate: [ authGuard ],
     // loadComponent: () => import('./book/book.component').then((b) => b.BookComponent),
+  },
+  {
+    path: 'dummy',
+    loadComponent: () => import('./features/dummy/dummy.component').then((m) => m.DummyComponent),
   }
 ];

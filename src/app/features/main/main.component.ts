@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { GridLayoutComponent } from '../../shared/grid-layout/grid-layout.component';
+import { GridLayoutComponent } from '../../shared/components/grid-layout/grid-layout.component';
 
 @Component({
   selector: 'app-main',

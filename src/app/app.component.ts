@@ -7,7 +7,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { AuthService } from './core/auth/auth.service';
-import { SpinnerComponent } from './shared/spinner/spinner.component';
+import { SpinnerComponent } from './shared/components/spinner/spinner.component';
 import { Store } from '@ngrx/store';
 import * as fromAuth from './core/auth/store/index'
 

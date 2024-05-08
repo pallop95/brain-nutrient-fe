@@ -24,13 +24,14 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 }
 */
-import { HttpInterceptorFn } from '@angular/common/http';
+import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 // import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
+import { catchError, throwError } from 'rxjs';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  console.log('auth interceptor...');
+  console.log('auth interceptor...', req);
   const authService = inject(AuthService);
   // const router = inject(Router);
 
@@ -43,6 +44,27 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
       }
     });
     return next(authReq);
+    //   .pipe(
+    //   catchError((error: HttpErrorResponse) => {
+    //     // Handle specific HTTP error status codes here
+    //     if (error.status === 401) {
+    //       // Handle Unauthorized error (e.g., redirect to login page)
+    //       // this.router.navigate(['/login']);
+    //       console.error('Unauthorized error:', error);
+    //     } else if (error.status === 403) {
+    //       // Handle Forbidden error
+    //       console.error('Forbidden error:', error);
+    //     } else if (error.status === 404) {
+    //       // Handle Not Found error
+    //       console.error('Not Found error:', error);
+    //     } else {
+    //       // Handle other errors
+    //       console.error('Other error:', error);
+    //     }
+    //     // Pass the error along to the caller
+    //     return throwError(error);
+    //   })
+    // );
   }
 
   return next(req);

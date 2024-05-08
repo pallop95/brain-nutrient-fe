@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnDestroy } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
-import * as fromAuth from '../../core/auth/store/index';
+import * as fromAuth from '../../../core/auth/store/index';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({

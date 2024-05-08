@@ -6,10 +6,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { AuthService } from './auth/auth.service';
+import { AuthService } from './core/auth/auth.service';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { Store } from '@ngrx/store';
-import * as fromAuth from './auth/store/index'
+import * as fromAuth from './core/auth/store/index'
 
 @Component({
   selector: 'app-root',

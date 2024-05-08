@@ -3,7 +3,7 @@ import { Router } from "@angular/router";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { Action } from "@ngrx/store";
 import { switchMap, tap, map, catchError, of } from "rxjs";
-import { BookDto } from "../../../../generated-sources/openapi";
+import { BookDto } from "../../../../../generated-sources/openapi";
 import { BookService } from "../book.service";
 import * as BookActions from './book.actions';
 import { MatSnackBar } from "@angular/material/snack-bar";

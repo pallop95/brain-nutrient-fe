@@ -1,4 +1,4 @@
-import { AccessToken } from "../../../../generated-sources/openapi";
+import { AccessToken } from "../../../../../generated-sources/openapi";
 import * as AuthActions from './auth.actions';
 import { Action, createReducer, on } from "@ngrx/store";
 

@@ -16,7 +16,7 @@ import {
 } from "@angular/fire/auth";
 import { Firestore } from 'firebase/firestore';
 */
-import { AccessToken, AuthControllerService } from '../../../generated-sources/openapi';
+import { AccessToken, AuthControllerService } from '../../../../generated-sources/openapi';
 import * as fromAuths from './store/index';
 
 @Injectable({

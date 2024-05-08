@@ -1,5 +1,5 @@
 import { createAction, props } from "@ngrx/store";
-import { BookDto } from "../../../../generated-sources/openapi";
+import { BookDto } from "../../../../../generated-sources/openapi";
 
 const prefixBookAction = '[Book]';
 

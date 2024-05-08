@@ -1,5 +1,5 @@
 import { Action, createAction, props } from '@ngrx/store';
-import { AccessToken } from '../../../../generated-sources/openapi';
+import { AccessToken } from '../../../../../generated-sources/openapi';
 
 export const LOGIN_START = '[Auth] Login Start';
 export const AUTHENTICATE_SUCCESS = '[Auth] Login';

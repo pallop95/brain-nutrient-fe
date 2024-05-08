@@ -3,6 +3,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import * as fromAuth from '../../../core/auth/store/index';
+import * as fromBook from '../../../features/book/store/index';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
@@ -10,8 +11,11 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   standalone: true,
   imports: [CommonModule, MatProgressSpinnerModule],
   template: `
-    <!-- {{ authIsLoading$ | async }} -->
     <div class="overlay" *ngIf="authIsLoading$ | async">
+      <mat-progress-spinner [diameter]="50" [mode]="'indeterminate'"></mat-progress-spinner>
+    </div>
+
+    <div class="overlay" *ngIf="bookIsLoading$ | async">
       <mat-progress-spinner [diameter]="50" [mode]="'indeterminate'"></mat-progress-spinner>
     </div>
   `,
@@ -38,10 +42,12 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 })
 export class SpinnerComponent implements OnDestroy {
   authIsLoading$: Observable<boolean>;
+  bookIsLoading$: Observable<boolean>;
   isLoadingSubscription: Subscription | undefined;
 
   constructor(private store: Store) {
     this.authIsLoading$ = this.store.select(fromAuth.selectors.selectAuthIsLoading);
+    this.bookIsLoading$ = this.store.select(fromBook.selectors.selectBookIsLoading);
     this.isLoadingSubscription = this.authIsLoading$.subscribe((isLoading) => {
       /*
       // You can perform additional actions based on isLoading state if needed

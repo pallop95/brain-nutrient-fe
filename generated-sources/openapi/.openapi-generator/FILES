@@ -8,6 +8,8 @@ api/booksController.service.ts
 api/booksController.serviceInterface.ts
 api/chaptersController.service.ts
 api/chaptersController.serviceInterface.ts
+api/dummyController.service.ts
+api/dummyController.serviceInterface.ts
 api/swagger.service.ts
 api/swagger.serviceInterface.ts
 api/usersController.service.ts

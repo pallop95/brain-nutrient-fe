@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, of, switchMap } from 'rxjs';
-import { BookDto, BooksControllerService } from '../../../generated-sources/openapi';
+import { BookDto, BooksControllerService } from '../../../../generated-sources/openapi';
 
 @Injectable({
   providedIn: 'root'

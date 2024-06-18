@@ -9,7 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BookService } from '../book.service';
 import { MatButtonModule } from '@angular/material/button';
 import { ModeFormType } from '../book.interface';
-import { BookDto, ChapterDto } from '../../../../generated-sources/openapi';
+import { BookDto, ChapterDto } from '../../../../../generated-sources/openapi';
 import { select, Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import * as fromBooks from '../store/index';

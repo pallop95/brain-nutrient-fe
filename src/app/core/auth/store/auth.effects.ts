@@ -4,11 +4,11 @@ import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { switchMap, catchError, map, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../../environments/environment';
 
 import * as AuthActions from './auth.actions';
 import { AuthService } from '../auth.service';
-import { AccessToken } from '../../../../generated-sources/openapi';
+import { AccessToken } from '../../../../../generated-sources/openapi';
 
 export interface AuthResponseData {
   kind: string;
@@ -110,7 +110,7 @@ export class AuthEffects {
           }),
           */
           tap(resData => {
-            this.authService.setRefreshTokenTimer( 3 /* 60 * 5 */ * 1000);
+            this.authService.setRefreshTokenTimer( (60 * 5) * 1000);
           }),
           // TODO: can we reuse .pipe()?
           // TODO: merge login$ & authSignup$

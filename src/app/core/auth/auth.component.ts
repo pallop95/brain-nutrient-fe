@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 import { UserCredential } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { AccessToken } from '../../../generated-sources/openapi';
+import { AccessToken } from '../../../../generated-sources/openapi';
 import { Store } from '@ngrx/store';
 import * as AuthActions from './store/auth.actions';
 @Component({

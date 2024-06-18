@@ -1,5 +1,5 @@
 import { Action, createReducer, on } from "@ngrx/store";
-import { BookDto } from "../../../../generated-sources/openapi";
+import { BookDto } from "../../../../../generated-sources/openapi";
 import * as BookActions from './book.actions';
 
 export interface State {

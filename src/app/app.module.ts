@@ -1,7 +1,7 @@
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { ApiModule } from '../../generated-sources/openapi';
-import { authInterceptor } from './auth/auth.interceptor';
+import { authInterceptor } from './core/auth/auth.interceptor';
 
 @NgModule({
   imports: [ApiModule],

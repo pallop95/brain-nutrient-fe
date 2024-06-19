@@ -20,5 +20,9 @@ export const routes: Routes = [
   {
     path: 'dummy',
     loadComponent: () => import('./features/dummy/dummy.component').then((m) => m.DummyComponent),
+  },
+  {
+    path: 'shared-comps',
+    loadComponent: () => import('./features/shared-comps/shared-comps.component').then((m) => m.SharedCompsComponent),
   }
 ];

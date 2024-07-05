@@ -1,0 +1,7 @@
+<mat-paginator [length]="paging.totalRow"
+  [pageSize]="paging.pageSize"
+  [pageIndex]="paging.page - 1"
+  [pageSizeOptions]="pageSizeOptions"
+  [disabled]="disabled"
+  (page)="handlePageEvent($event)">
+</mat-paginator>
